@@ -46,8 +46,8 @@ export default function CurrentPlaying() {
         spaceBetween={0}
         slidesPerView={1}
         autoplay={{
-          delay: 2500,
-          disableOnInteraction: true,
+          delay: 3000,
+          disableOnInteraction: false,
         }}
         pagination={{
           dynamicBullets: true,

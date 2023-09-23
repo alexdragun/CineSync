@@ -1,0 +1,33 @@
+.upcoming-container {
+  @apply my-16 px-16 relative select-none;
+  &:after {
+    content: "";
+    background: linear-gradient(
+      270deg,
+      rgba(13, 12, 15, 1) 0%,
+      rgba(13, 12, 15, 0) 5%,
+      rgba(13, 12, 15, 0) 100%
+    );
+    @apply absolute right-16 top-0 bottom-0 left-0 z-10 pointer-events-none;
+  }
+  .movie-image {
+    @apply block w-full h-auto object-contain rounded-2xl;
+  }
+  .swiper-pagination {
+    left: initial !important;
+    @apply right-0 bottom-16 w-auto;
+    &-bullet {
+      @apply bg-white w-3 h-3;
+    }
+  }
+
+  .movie-info {
+    background: linear-gradient(
+      0deg,
+      rgba(13, 12, 15, 1) 0%,
+      rgba(13, 12, 15, 0.44861694677871145) 20%,
+      rgba(13, 12, 15, 0) 100%
+    );
+    @apply absolute top-0 right-0 bottom-0 left-0 flex items-end p-4;
+  }
+}
