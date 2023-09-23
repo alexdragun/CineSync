@@ -1,0 +1,27 @@
+.movie-container {
+  .swiper {
+    @apply max-h-[100vh] min-h-[768px];
+  }
+  .movie-image {
+    @apply block w-full h-auto max-h-[100vh] object-cover min-h-[768px];
+  }
+  .swiper-pagination {
+    left: initial !important;
+    @apply right-0 bottom-16 w-auto;
+    &-bullet {
+      @apply bg-white w-3 h-3;
+    }
+  }
+
+  .movie-info {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(0, 0, 0, 1) 90%
+    );
+    @apply absolute top-0 right-0 bottom-0 left-0 flex items-end p-16;
+    &__inner {
+    }
+  }
+}
