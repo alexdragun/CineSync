@@ -1,13 +1,15 @@
 .movie-container {
   .swiper {
-    @apply max-h-[100vh] min-h-[768px];
+    @apply max-h-[100vh] xl:h-screen min-h-[768px];
   }
   .movie-image {
-    @apply block w-full h-auto max-h-[100vh] object-cover min-h-[768px];
+    @apply block w-full h-full max-h-[100vh] object-cover min-h-[768px];
   }
   .swiper-pagination {
-    left: initial !important;
-    @apply right-0 bottom-16 w-auto;
+    @media (min-width: 768px) {
+      left: initial !important;
+    }
+    @apply right-0 bottom-8 md:bottom-16 w-auto;
     &-bullet {
       @apply bg-white w-3 h-3;
     }
@@ -22,6 +24,15 @@
       rgba(13, 12, 15, 0.284) 75%,
       rgba(13, 12, 15, 1) 100%
     );
-    @apply absolute top-0 right-0 bottom-0 left-0 flex items-end p-16;
+    @apply absolute top-0 right-0 bottom-0 left-0 flex items-end p-8 lg:p-16 pb-24 md:pb-8 lg:pb-16;
+
+    .movie-desc {
+      @apply max-w-3xl mt-4 mb-6;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+    }
   }
 }

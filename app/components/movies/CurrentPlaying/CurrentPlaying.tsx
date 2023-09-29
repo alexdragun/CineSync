@@ -47,7 +47,7 @@ export default function CurrentPlaying() {
         slidesPerView={1}
         autoplay={{
           delay: 3000,
-          disableOnInteraction: false,
+          disableOnInteraction: true,
         }}
         pagination={{
           dynamicBullets: true,
@@ -59,6 +59,8 @@ export default function CurrentPlaying() {
             <Image
               className="movie-image"
               src={`https://image.tmdb.org/t/p/original${obj.backdrop_path}`}
+              blurDataURL={`https://image.tmdb.org/t/p/w45${obj.backdrop_path}`}
+              placeholder="blur"
               alt={obj.title}
               width={0}
               height={0}
@@ -69,16 +71,35 @@ export default function CurrentPlaying() {
                 <h1 className="font-semibold mb-3">{obj.title}</h1>
                 <div className="flex text-[#9CA4AB]">
                   <p className="vote">{obj.vote_average}</p>
-                  <p className="ml-2">
+                  <p className="ml-1">
                     • {new Date(obj.release_date).getFullYear()}
                   </p>
-                  {obj.genre_ids.map((genreId) => (
-                    <p className="ml-2" key={genreId}>
-                      • {showGenre(genreId)}
-                    </p>
-                  ))}
+                  <div className="hidden sm:block">
+                    {obj.genre_ids.length >= 3 ? (
+                      <div className="flex">
+                        {obj.genre_ids.slice(0, 3).map((genreId) => (
+                          <p className="ml-1" key={genreId}>
+                            • {showGenre(genreId)}
+                          </p>
+                        ))}
+                        <p className="ml-1">
+                          {obj.genre_ids.length - 3
+                            ? `+ ${obj.genre_ids.length - 3} more`
+                            : ""}
+                        </p>
+                      </div>
+                    ) : (
+                      <div className="flex">
+                        {obj.genre_ids.map((genreId) => (
+                          <p className="ml-1" key={genreId}>
+                            • {showGenre(genreId)}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <p className="max-w-3xl mt-4 mb-6">{obj.overview}</p>
+                <p className="movie-desc">{obj.overview}</p>
                 <UILink href={`movie/${obj.id}`} label="Read more" />
               </div>
             </div>
