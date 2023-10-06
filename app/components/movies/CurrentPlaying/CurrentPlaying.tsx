@@ -1,43 +1,49 @@
 "use client";
 
+// React
 import { useState, useEffect } from "react";
+
+// Stores
+import { useAppSelector } from "@/app/redux/store";
+
+// Types
+import type { Movie, Paginated } from "@/app/types/movies";
+
+// Services
 import $http from "@/app/services/http";
+
+// Components
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
-import type { Movie, Genre } from "@/app/types/movies";
 import UILink from "@/app/components/UI/UILink";
+
+// Styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "./CurrentPlaying.scss";
 
 export default function CurrentPlaying() {
   const [nowPlaying, setNowPlaying] = useState<Movie[]>([]);
-  const [genres, setGenres] = useState<Genre[]>([]);
-
-  const getMoviesGenres = async () => {
-    try {
-      const response = await $http.get("api/genre/movie/list");
-
-      setGenres(response.genres);
-    } catch (e) {
-      setGenres([]);
-    }
-  };
+  const genres = useAppSelector((state) => state.moviesReducer.value.genres);
 
   const showGenre = (genreId: number) =>
     genres.find((obj) => obj.id === genreId)?.name;
 
+  const getCurrentPlayingMovies = async () => {
+    try {
+      const response = await $http.get<Paginated<Movie>>(
+        "api/movie/now_playing"
+      );
+
+      setNowPlaying(response?.results || []);
+    } catch (e) {
+      setNowPlaying([]);
+    }
+  };
+
   useEffect(() => {
-    $http
-      .get("api/movie/now_playing")
-      .then((res) => {
-        setNowPlaying(res.results);
-        getMoviesGenres();
-      })
-      .catch(() => {
-        setNowPlaying([]);
-      });
+    getCurrentPlayingMovies();
   }, []);
 
   return (

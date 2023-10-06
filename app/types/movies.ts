@@ -21,7 +21,7 @@ export type Genre = {
 };
 
 export type Paginated<T> = {
-  dates: {
+  dates?: {
     maximum: string;
     minimum: string;
   };

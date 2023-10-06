@@ -1,6 +1,10 @@
 const BASE_URL = "https://api.themoviedb.org/3";
 
-export default async function handler(req, res) {
+type Request = {
+  url: string;
+};
+
+export default async function handler(req: Request, res: any) {
   try {
     const modifiedUrl = req.url.replace(/^\/api\//, "/");
 
@@ -15,8 +19,8 @@ export default async function handler(req, res) {
     } else {
       throw response;
     }
-  } catch (error) {
-    let formattedStatusCode;
+  } catch (error: any) {
+    let formattedStatusCode: number;
     switch (error.status_code) {
       case 34:
         formattedStatusCode = 404;

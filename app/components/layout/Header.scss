@@ -1,5 +1,8 @@
 .header {
-  @apply fixed top-0 left-0 right-0 z-50 px-8 xl:px-16 py-6 xl:py-8 flex items-center;
+  @apply fixed top-0 left-0 right-0 z-50 px-8 xl:px-16 py-6 xl:py-8 flex items-center duration-300;
+  &--scrolled {
+    @apply bg-[#0d0c0f] py-6;
+  }
   &--left {
     @apply flex flex-1 justify-start;
     img {
@@ -14,12 +17,12 @@
     @apply hidden gap-3 justify-end flex-1 lg:flex;
   }
   &--mobile {
-    @apply fixed top-0 right-0 bottom-0 bg-black w-full max-w-[320px] lg:hidden translate-x-[320px] duration-300;
+    @apply fixed top-0 right-0 bottom-0 bg-[#0d0c0f] w-full max-w-[320px] lg:hidden translate-x-[320px] duration-300;
     &--active {
       @apply translate-x-0;
     }
     &__inner {
-      @apply px-6 pt-16;
+      @apply px-6 pt-24;
       a {
         @apply block mb-3;
       }
@@ -66,5 +69,8 @@
         @apply mb-0;
       }
     }
+  }
+  .link {
+    @apply hover:text-[#41bb8e] duration-300;
   }
 }
