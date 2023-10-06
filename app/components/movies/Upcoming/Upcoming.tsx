@@ -1,8 +1,8 @@
 "use client";
-import type { Genre } from "@/app/types/movies";
+import type { Movie, Genre, Paginated } from "@/app/types/movies";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import $http from "@/app/api/http";
+import $http from "@/app/services/http";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -11,16 +11,28 @@ import "./Upcoming.scss";
 import Star from "@/public/images/star.png";
 
 export default function Upcoming() {
-  const [upcoming, setUpcoming] = useState([]);
+  const [upcoming, setUpcoming] = useState<Movie[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
 
   const getMoviesGenres = async () => {
     try {
-      const response = await $http().get("api/genre/movie/list");
+      const response = await $http.get<{ genres: Genre[] }>(
+        "api/genre/movie/list"
+      );
 
-      setGenres(response.genres);
+      setGenres(response?.genres || []);
     } catch (e) {
       setGenres([]);
+    }
+  };
+
+  const getUpcomingMovies = async () => {
+    try {
+      const response = await $http.get<Paginated<Movie>>("api/movie/upcoming");
+      setUpcoming(response?.results || []);
+      getMoviesGenres();
+    } catch (e) {
+      setUpcoming([]);
     }
   };
 
@@ -28,15 +40,7 @@ export default function Upcoming() {
     genres.find((obj) => obj.id === genreId)?.name;
 
   useEffect(() => {
-    $http()
-      .get("api/movie/upcoming")
-      .then((res) => {
-        setUpcoming(res.results);
-        getMoviesGenres();
-      })
-      .catch(() => {
-        setUpcoming([]);
-      });
+    getUpcomingMovies();
   }, []);
 
   return (

@@ -1,23 +1,23 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import $http from "@/app/api/http";
+import $http from "@/app/services/http";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
-import type { NowPlaying, Genre } from "@/app/types/movies";
+import type { Movie, Genre } from "@/app/types/movies";
 import UILink from "@/app/components/UI/UILink";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./CurrentPlaying.scss";
 
 export default function CurrentPlaying() {
-  const [nowPlaying, setNowPlaying] = useState<NowPlaying[]>([]);
+  const [nowPlaying, setNowPlaying] = useState<Movie[]>([]);
   const [genres, setGenres] = useState<Genre[]>([]);
 
   const getMoviesGenres = async () => {
     try {
-      const response = await $http().get("api/genre/movie/list");
+      const response = await $http.get("api/genre/movie/list");
 
       setGenres(response.genres);
     } catch (e) {
@@ -29,7 +29,7 @@ export default function CurrentPlaying() {
     genres.find((obj) => obj.id === genreId)?.name;
 
   useEffect(() => {
-    $http()
+    $http
       .get("api/movie/now_playing")
       .then((res) => {
         setNowPlaying(res.results);

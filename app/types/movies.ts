@@ -1,4 +1,4 @@
-export type NowPlaying = {
+export type Movie = {
   adult: boolean;
   backdrop_path: string;
   genre_ids: number[];
@@ -18,4 +18,15 @@ export type NowPlaying = {
 export type Genre = {
   id: number;
   name: string;
+};
+
+export type Paginated<T> = {
+  dates: {
+    maximum: string;
+    minimum: string;
+  };
+  page: number;
+  results: T[];
+  total_pages: number;
+  total_results: number;
 };
